@@ -257,6 +257,129 @@
     to { transform: translateX(-50%); }
   }
 
+  /* ── TICKER 2 REVERSE ── */
+  .ticker2 {
+    background: var(--card-bg);
+    border-top: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 12px 0;
+  }
+  .ticker2-inner { display: inline-block; animation: ticker2 25s linear infinite; }
+  @keyframes ticker2 {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+  .ticker2-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    padding: 0 28px;
+  }
+  .ticker2-item .hi { color: var(--purple-soft); }
+
+  /* ── CURSOR GLOW ── */
+  .cursor-glow {
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.05) 0%, transparent 70%);
+    position: fixed;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: left 0.08s, top 0.08s;
+  }
+
+  /* ── FLOATING ORBS ── */
+  .orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(80px); }
+  .orb-1 { width: 320px; height: 320px; background: rgba(124,58,237,0.12); top: 15%; right: 8%; animation: floatOrb 9s ease-in-out infinite; }
+  .orb-2 { width: 220px; height: 220px; background: rgba(212,168,67,0.07); bottom: 25%; left: 4%; animation: floatOrb 7s ease-in-out infinite; animation-delay: -3s; }
+  .orb-3 { width: 260px; height: 260px; background: rgba(124,58,237,0.07); top: 55%; right: 15%; animation: floatOrb 11s ease-in-out infinite; animation-delay: -6s; }
+  @keyframes floatOrb {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-28px) scale(1.04); }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.05s; }
+  .reveal-d2 { transition-delay: 0.15s; }
+  .reveal-d3 { transition-delay: 0.25s; }
+  .reveal-d4 { transition-delay: 0.35s; }
+
+  /* ── SHIMMER ON CARDS ── */
+  .service-card { position: relative; overflow: hidden; }
+  .service-card::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -75%;
+    width: 50%; height: 200%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.03), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.7s ease;
+  }
+  .service-card:hover::after { left: 150%; }
+
+  /* ── GRADIENT BORDER ON WHY CARDS ── */
+  .why-card { position: relative; }
+  .why-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent 30%, rgba(124,58,237,0.5) 60%, transparent 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .why-card:hover::before { opacity: 1; }
+
+  /* ── PULSE GREEN DOT ── */
+  .pulse-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    margin-right: 8px;
+    position: relative;
+    vertical-align: middle;
+  }
+  .pulse-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: rgba(34,197,94,0.3);
+    animation: pulseAnim 2s ease-in-out infinite;
+  }
+  @keyframes pulseAnim {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.8); opacity: 0; }
+  }
+
+  /* ── GLITCH LOGO HOVER ── */
+  .logo:hover { animation: glitch 0.4s ease; }
+  @keyframes glitch {
+    0%, 100% { text-shadow: none; }
+    25% { text-shadow: -2px 0 #7c3aed, 2px 0 #d4a843; }
+    50% { text-shadow: 2px 0 #8b5cf6, -2px 0 #d4a843; }
+    75% { text-shadow: -1px 0 #d4a843; }
+  }
+
+  /* ── PAUSE TICKER ON HOVER ── */
+  .ticker:hover .ticker-inner, .ticker2:hover .ticker2-inner { animation-play-state: paused; }
+
   .ticker-item {
     display: inline-flex;
     align-items: center;
@@ -711,6 +834,14 @@
 </head>
 <body>
 
+<!-- CURSOR GLOW -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- FLOATING ORBS -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
 <!-- NAV -->
 <nav>
   <div class="nav-left">
@@ -723,7 +854,7 @@
     </div>
   </div>
   <a href="https://wa.me/87083773599?text=Здравствуйте!%20Хочу%20заказать%20сайт" class="nav-cta">
-    Написать в WhatsApp
+    <span class="pulse-dot"></span>Написать в WhatsApp
   </a>
 </nav>
 
@@ -736,7 +867,7 @@
       <span class="line2">сайты за 1–2 дня</span>
     </h1>
     <p class="hero-desc">
-      Создаю красивые сайты для ресторанов, салонов и магазинов в Астане Быстро, доступно и без лишних сложностей.
+      Создаём красивые сайты для ресторанов, салонов и магазинов в Астане. Быстро, доступно и без лишних сложностей.
     </p>
     <div class="hero-actions">
       <a href="https://wa.me/87083773599?text=Здравствуйте!%20Хочу%20заказать%20сайт" class="btn-primary">
@@ -782,6 +913,28 @@
     <span class="ticker-item">Логотипы и брендинг <span class="ticker-dot"></span></span>
     <span class="ticker-item">Google Business <span class="ticker-dot"></span></span>
     <span class="ticker-item">WhatsApp Business <span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- TICKER 2 — REVERSE -->
+<div class="ticker2">
+  <div class="ticker2-inner">
+    <span class="ticker2-item">Астана <span class="hi">✦</span></span>
+    <span class="ticker2-item">Казахстан <span class="hi">✦</span></span>
+    <span class="ticker2-item">Веб-дизайн <span class="hi">✦</span></span>
+    <span class="ticker2-item">Быстро <span class="hi">✦</span></span>
+    <span class="ticker2-item">Доступно <span class="hi">✦</span></span>
+    <span class="ticker2-item">За 1–2 дня <span class="hi">✦</span></span>
+    <span class="ticker2-item">Гарантия <span class="hi">✦</span></span>
+    <span class="ticker2-item">Профессионально <span class="hi">✦</span></span>
+    <span class="ticker2-item">Астана <span class="hi">✦</span></span>
+    <span class="ticker2-item">Казахстан <span class="hi">✦</span></span>
+    <span class="ticker2-item">Веб-дизайн <span class="hi">✦</span></span>
+    <span class="ticker2-item">Быстро <span class="hi">✦</span></span>
+    <span class="ticker2-item">Доступно <span class="hi">✦</span></span>
+    <span class="ticker2-item">За 1–2 дня <span class="hi">✦</span></span>
+    <span class="ticker2-item">Гарантия <span class="hi">✦</span></span>
+    <span class="ticker2-item">Профессионально <span class="hi">✦</span></span>
   </div>
 </div>
 
@@ -870,28 +1023,28 @@
 <section id="why">
   <div class="section-tag">Почему мы</div>
   <h2 class="section-title">Ваш бизнес заслуживает лучшего</h2>
-  <p class="section-sub">Мы понимаем потребности местного бизнеса в Астане.</p>
+  <p class="section-sub">Наша команда понимает потребности местного бизнеса в Астане.</p>
 
   <div class="why-grid">
     <div class="why-card">
       <span class="why-icon">⚡</span>
       <div class="why-title">Быстро — за 1–2 дня</div>
-      <div class="why-desc">Не нужно ждать неделями. Ваш сайт будет готов уже через 1–2 рабочих дня.</div>
+      <div class="why-desc">Не нужно ждать неделями. Мы сдаём готовый сайт уже через 1–2 рабочих дня.</div>
     </div>
     <div class="why-card">
       <span class="why-icon">💬</span>
       <div class="why-title">Общаемся по-казахски</div>
-      <div class="why-desc">Работаем на русском и казахском языках. Всегда на связи в WhatsApp.</div>
+      <div class="why-desc">Наша команда работает на русском и казахском языках. Всегда на связи в WhatsApp.</div>
     </div>
     <div class="why-card">
       <span class="why-icon">🎨</span>
       <div class="why-title">Современный дизайн</div>
-      <div class="why-desc">Создаём красивые и уникальные сайты которые выделяют ваш бизнес среди конкурентов.</div>
+      <div class="why-desc">Наши дизайнеры создают красивые и уникальные сайты которые выделяют ваш бизнес среди конкурентов.</div>
     </div>
     <div class="why-card">
       <span class="why-icon">📍</span>
       <div class="why-title">Мы в Астане</div>
-      <div class="why-desc">Понимаем местный рынок, клиентов и потребности бизнеса в Казахстане.</div>
+      <div class="why-desc">Мы из Астаны — понимаем местный рынок, клиентов и потребности бизнеса в Казахстане.</div>
     </div>
   </div>
 </section>
@@ -903,7 +1056,7 @@
     <div class="g-content">
       <div class="g-label">Гарантия</div>
       <div class="g-title">Работаем без риска для вас</div>
-      <div class="g-text">Перед стартом согласуем каждую деталь. Если готовый результат не совпадёт с договорённостями — возвращаю оплату полностью. Ваши деньги в безопасности.</div>
+      <div class="g-text">Перед стартом мы согласуем каждую деталь. Если готовый результат не совпадёт с договорённостями — возвращаем оплату полностью. Ваши деньги в безопасности.</div>
     </div>
   </div>
 </div>
@@ -964,7 +1117,7 @@
 <div class="contact-section" id="contact">
   <div class="section-tag" style="justify-content:center">Контакты</div>
   <h2 class="contact-title">Готовы начать?<br>Напишите нам</h2>
-  <p class="contact-sub">Бесплатная консультация — ответим на все вопросы и рассчитаем стоимость вашего сайта</p>
+  <p class="contact-sub">Бесплатная консультация — наша команда ответит на все вопросы и рассчитает стоимость вашего сайта</p>
   <div class="contact-buttons">
     <a href="https://wa.me/87083773599?text=Здравствуйте!%20Хочу%20заказать%20сайт" class="btn-primary">
       💬 Написать в WhatsApp
@@ -988,6 +1141,74 @@
     <a href="#services" class="footer-link">Услуги</a>
   </div>
 </footer>
+
+<script>
+  // ── CURSOR GLOW ──
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.service-card, .why-card, .extra-card, .guarantee-block, section h2, section p, .section-tag');
+  reveals.forEach((el, i) => {
+    el.classList.add('reveal');
+    if (i % 4 === 1) el.classList.add('reveal-d1');
+    if (i % 4 === 2) el.classList.add('reveal-d2');
+    if (i % 4 === 3) el.classList.add('reveal-d3');
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // ── STAT COUNTER ANIMATION ──
+  function animateCounter(el, target, suffix) {
+    let start = 0;
+    const duration = 1500;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // Animate stats when hero is visible
+  const statsObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const heroStats = document.querySelector('.hero-stats');
+  if (heroStats) statsObserver.observe(heroStats);
+
+  // ── EXTRA CARD TILT ──
+  document.querySelectorAll('.extra-card, .why-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-2px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+</script>
 
 </body>
 </html>
