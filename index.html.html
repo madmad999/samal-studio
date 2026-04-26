@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samal Studio — Профессиональные сайты в Астане</title>
+<meta name="description" content="Создаю красивые сайты для ресторанов, салонов и магазинов в Астане за 1–2 дня. От 25 000 ₸.">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700;800&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --nav-bg: #161616;
+    --card-bg: #1a1a1a;
+    --card-border: #2a2a2a;
+    --purple: #7c3aed;
+    --purple-soft: #8b5cf6;
+    --purple-glow: rgba(124,58,237,0.15);
+    --white: #ffffff;
+    --gray-1: #f5f5f5;
+    --gray-2: #a3a3a3;
+    --gray-3: #525252;
+    --gold: #d4a843;
+    --green: #22c55e;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Geologica', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 64px;
+    background: rgba(22,22,22,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    z-index: 1000;
+  }
+
+  .nav-left { display: flex; align-items: center; gap: 48px; }
+
+  .logo {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-links { display: flex; gap: 32px; }
+
+  .nav-link {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--gray-2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-link:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--purple);
+    color: white;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 10px 22px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-cta:hover { background: var(--purple-soft); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Glow orbs */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(212,168,67,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--purple-soft);
+    margin-bottom: 28px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--purple-soft);
+  }
+
+  .hero-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(36px, 6.5vw, 80px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 28px;
+  }
+
+  .hero-title .line2 {
+    color: var(--purple-soft);
+    display: block;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--gray-2);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 48px;
+  }
+
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--purple);
+    color: white;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 16px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-primary:hover { background: var(--purple-soft); transform: translateY(-2px); box-shadow: 0 16px 48px rgba(124,58,237,0.3); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gray-2);
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--white); }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 72px;
+    padding-top: 48px;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .stat-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .stat-num span { color: var(--purple-soft); }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--gray-2);
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    background: var(--purple);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 14px 0;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 20s linear infinite;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    padding: 0 32px;
+  }
+
+  .ticker-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 100px 48px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--purple-soft);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-tag::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--card-border);
+    max-width: 60px;
+  }
+
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--gray-2);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 56px;
+  }
+
+  /* ── SERVICES ── */
+  .services-grid { display: flex; flex-direction: column; gap: 12px; }
+
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+
+  .service-card:hover {
+    border-color: var(--purple);
+    transform: translateY(-2px);
+  }
+
+  .service-card.featured { border-color: var(--purple); }
+
+  .service-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    padding: 32px 36px 24px;
+    align-items: start;
+  }
+
+  .s-badge {
+    display: inline-block;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+  }
+
+  .badge-hot { background: var(--purple); color: white; }
+  .badge-mo { background: rgba(124,58,237,0.15); color: var(--purple-soft); border: 1px solid rgba(124,58,237,0.3); }
+
+  .s-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .s-desc { font-size: 14px; color: var(--gray-2); line-height: 1.6; }
+
+  .price-col { text-align: right; padding-top: 4px; }
+
+  .p-from {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    margin-bottom: 2px;
+  }
+
+  .p-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    white-space: nowrap;
+  }
+
+  .p-period { font-size: 12px; color: var(--purple-soft); margin-top: 3px; font-weight: 400; }
+
+  .service-divider { height: 1px; background: var(--card-border); margin: 0 36px; }
+
+  .service-features {
+    padding: 20px 36px 28px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .feat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--gray-2);
+  }
+
+  .feat-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--purple-soft);
+    flex-shrink: 0;
+  }
+
+  /* ── WHY US ── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .why-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s;
+  }
+
+  .why-card:hover { border-color: var(--purple); }
+
+  .why-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .why-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+
+  .why-desc { font-size: 14px; color: var(--gray-2); line-height: 1.6; }
+
+  /* ── EXTRAS ── */
+  .extras-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .extra-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s;
+  }
+
+  .extra-card:hover { border-color: var(--purple); }
+
+  .extra-left { display: flex; align-items: center; gap: 14px; }
+  .extra-icon { font-size: 22px; }
+  .extra-name { font-size: 15px; font-weight: 500; color: var(--white); margin-bottom: 2px; }
+  .extra-desc { font-size: 12px; color: var(--gray-2); }
+  .extra-price {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  /* ── GUARANTEE ── */
+  .guarantee-block {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16162a 100%);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 20px;
+    padding: 56px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    margin: 0 48px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .guarantee-block::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+  }
+
+  .g-icon-wrap {
+    width: 80px; height: 80px;
+    border-radius: 20px;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .g-content { position: relative; z-index: 1; }
+
+  .g-label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--purple-soft);
+    margin-bottom: 12px;
+  }
+
+  .g-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .g-text { font-size: 15px; color: var(--gray-2); line-height: 1.7; }
+
+  /* ── PROMO ── */
+  .promo-section {
+    padding: 80px 48px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .promo-block {
+    background: var(--purple);
+    border-radius: 20px;
+    padding: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .promo-block::before {
+    content: '30%';
+    position: absolute;
+    right: -20px; top: -20px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 160px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .promo-left { position: relative; z-index: 1; }
+
+  .promo-tag2 {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 12px;
+  }
+
+  .promo-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .promo-sub { font-size: 15px; color: rgba(255,255,255,0.7); margin-top: 8px; }
+
+  .btn-white {
+    background: white;
+    color: var(--purple);
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,0.2); }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    padding: 80px 48px 120px;
+    max-width: 960px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .contact-sub { font-size: 16px; color: var(--gray-2); margin-bottom: 40px; line-height: 1.6; }
+
+  .contact-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+
+  .contact-info {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .info-item {
+    font-size: 14px;
+    color: var(--gray-2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-item span { color: var(--white); font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--nav-bg);
+    border-top: 1px solid var(--card-border);
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .footer-copy { font-size: 13px; color: var(--gray-3); }
+
+  .footer-links { display: flex; gap: 24px; }
+
+  .footer-link { font-size: 13px; color: var(--gray-2); text-decoration: none; transition: color 0.15s; }
+  .footer-link:hover { color: var(--white); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .hero-stats { gap: 28px; flex-wrap: wrap; }
+    section { padding: 60px 20px; }
+    .service-head { grid-template-columns: 1fr; }
+    .price-col { text-align: left; }
+    .service-features { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .extras-grid { grid-template-columns: 1fr; }
+    .guarantee-block { grid-template-columns: 1fr; padding: 36px 24px; margin: 0 20px; }
+    .g-icon-wrap { display: none; }
+    .promo-section { padding: 40px 20px; }
+    .promo-block { flex-direction: column; padding: 36px 28px; }
+    .contact-section { padding: 60px 20px 80px; }
+    footer { flex-direction: column; gap: 16px; padding: 24px 20px; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="#" class="logo">Samal Studio</a>
+    <div class="nav-links">
+      <a href="#services" class="nav-link">Услуги</a>
+      <a href="#why" class="nav-link">О нас</a>
+      <a href="#extras" class="nav-link">Дополнительно</a>
+      <a href="#contact" class="nav-link">Контакты</a>
+    </div>
+  </div>
+  <a href="https://wa.me/87083773599?text=Здравствуйте!%20Хочу%20заказать%20сайт" class="nav-cta">
+    Написать в WhatsApp
+  </a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Веб-дизайн · Астана, Казахстан</div>
+    <h1 class="hero-title">
+      Профессиональные<br>
+      <span class="line2">сайты за 1–2 дня</span>
+    </h1>
+    <p class="hero-desc">
+      Создаю красивые сайты для ресторанов, салонов и магазинов в Астане с помощью AI-инструментов. Быстро, доступно и без лишних сложностей.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/87083773599?text=Здравствуйте!%20Хочу%20заказать%20сайт" class="btn-primary">
+        💬 Написать в WhatsApp
+      </a>
+      <a href="#services" class="btn-ghost">
+        Смотреть услуги →
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">1–2<span>дня</span></div>
+        <div class="stat-label">Срок создания сайта</div>
+      </div>
+      <div>
+        <div class="stat-num">от 25К<span>₸</span></div>
+        <div class="stat-label">Стоимость от</div>
+      </div>
+      <div>
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Гарантия возврата</div>
+      </div>
+      <div>
+        <div class="stat-num">&lt;1<span>ч</span></div>
+        <div class="stat-label">Время ответа</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Создание сайтов <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Контент для Instagram <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Обслуживание сайтов <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Логотипы и брендинг <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Google Business <span class="ticker-dot"></span></span>
+    <span class="ticker-item">WhatsApp Business <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Создание сайтов <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Контент для Instagram <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Обслуживание сайтов <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Логотипы и брендинг <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Google Business <span class="ticker-dot"></span></span>
+    <span class="ticker-item">WhatsApp Business <span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag">Наши услуги</div>
+  <h2 class="section-title">Что мы предлагаем</h2>
+  <p class="section-sub">Три услуги которые нужны каждому бизнесу в Астане для роста онлайн.</p>
+
+  <div class="services-grid">
+
+    <div class="service-card featured">
+      <div class="service-head">
+        <div>
+          <span class="s-badge badge-hot">🔥 Популярное</span>
+          <div class="s-name">Создание сайта</div>
+          <div class="s-desc">Профессиональный сайт под ключ — от дизайна до публикации. Готово за 1–2 дня.</div>
+        </div>
+        <div class="price-col">
+          <div class="p-from">от</div>
+          <div class="p-num">25 000 ₸</div>
+          <div class="p-period">разово</div>
+        </div>
+      </div>
+      <div class="service-divider"></div>
+      <div class="service-features">
+        <div class="feat"><div class="feat-check">✓</div>3–5 страниц сайта</div>
+        <div class="feat"><div class="feat-check">✓</div>Мобильная версия</div>
+        <div class="feat"><div class="feat-check">✓</div>Форма обратной связи</div>
+        <div class="feat"><div class="feat-check">✓</div>Кнопка WhatsApp</div>
+        <div class="feat"><div class="feat-check">✓</div>Базовое SEO</div>
+        <div class="feat"><div class="feat-check">✓</div>Уникальный дизайн</div>
+        <div class="feat"><div class="feat-check">✓</div>Правки в течение 3 дней</div>
+        <div class="feat"><div class="feat-check">✓</div>Инструкция по управлению</div>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-head">
+        <div>
+          <span class="s-badge badge-mo">Ежемесячно</span>
+          <div class="s-name">Обслуживание сайта</div>
+          <div class="s-desc">Обновления, правки, техподдержка. Ваш сайт всегда актуален — без вашего участия.</div>
+        </div>
+        <div class="price-col">
+          <div class="p-from">от</div>
+          <div class="p-num">8 000 ₸</div>
+          <div class="p-period">в месяц</div>
+        </div>
+      </div>
+      <div class="service-divider"></div>
+      <div class="service-features">
+        <div class="feat"><div class="feat-check">✓</div>До 5 правок в месяц</div>
+        <div class="feat"><div class="feat-check">✓</div>Обновление цен и фото</div>
+        <div class="feat"><div class="feat-check">✓</div>Техническая поддержка</div>
+        <div class="feat"><div class="feat-check">✓</div>Ответ в течение 1 часа</div>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-head">
+        <div>
+          <span class="s-badge badge-mo">Ежемесячно</span>
+          <div class="s-name">Контент для Instagram</div>
+          <div class="s-desc">Готовые посты, подписи и идеи для сторис каждую неделю — в стиле вашего бренда.</div>
+        </div>
+        <div class="price-col">
+          <div class="p-from">от</div>
+          <div class="p-num">15 000 ₸</div>
+          <div class="p-period">в месяц</div>
+        </div>
+      </div>
+      <div class="service-divider"></div>
+      <div class="service-features">
+        <div class="feat"><div class="feat-check">✓</div>8–12 постов в месяц</div>
+        <div class="feat"><div class="feat-check">✓</div>Подписи на русском/казахском</div>
+        <div class="feat"><div class="feat-check">✓</div>Идеи для сторис</div>
+        <div class="feat"><div class="feat-check">✓</div>AI-дизайн в стиле бренда</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-tag">Почему мы</div>
+  <h2 class="section-title">Ваш бизнес заслуживает лучшего</h2>
+  <p class="section-sub">Мы понимаем потребности местного бизнеса в Астане.</p>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-icon">⚡</span>
+      <div class="why-title">Быстро — за 1–2 дня</div>
+      <div class="why-desc">Не нужно ждать неделями. Ваш сайт будет готов уже через 1–2 рабочих дня.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">💬</span>
+      <div class="why-title">Общаемся по-казахски</div>
+      <div class="why-desc">Работаем на русском и казахском языках. Всегда на связи в WhatsApp.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">🤖</span>
+      <div class="why-title">AI-инструменты</div>
+      <div class="why-desc">Используем современные AI-технологии — это позволяет делать быстро и доступно.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">📍</span>
+      <div class="why-title">Мы в Астане</div>
+      <div class="why-desc">Понимаем местный рынок, клиентов и потребности бизнеса в Казахстане.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<div style="padding: 0 48px; max-width: 1008px; margin: 0 auto;">
+  <div class="guarantee-block">
+    <div class="g-icon-wrap">🛡️</div>
+    <div class="g-content">
+      <div class="g-label">Гарантия</div>
+      <div class="g-title">Работаем без риска для вас</div>
+      <div class="g-text">Перед стартом согласуем каждую деталь. Если готовый результат не совпадёт с договорённостями — возвращаю оплату полностью. Ваши деньги в безопасности.</div>
+    </div>
+  </div>
+</div>
+
+<!-- EXTRAS -->
+<section id="extras">
+  <div class="section-tag">Дополнительно</div>
+  <h2 class="section-title">Дополнительные услуги</h2>
+  <p class="section-sub">Всё что нужно для полноценного присутствия вашего бизнеса онлайн.</p>
+
+  <div class="extras-grid">
+    <div class="extra-card">
+      <div class="extra-left">
+        <span class="extra-icon">🎨</span>
+        <div>
+          <div class="extra-name">Логотип</div>
+          <div class="extra-desc">Уникальный логотип в фирменном стиле</div>
+        </div>
+      </div>
+      <div class="extra-price">от 10 000 ₸</div>
+    </div>
+    <div class="extra-card">
+      <div class="extra-left">
+        <span class="extra-icon">📍</span>
+        <div>
+          <div class="extra-name">Google Business</div>
+          <div class="extra-desc">Настройка карточки на Google Maps</div>
+        </div>
+      </div>
+      <div class="extra-price">от 8 000 ₸</div>
+    </div>
+    <div class="extra-card">
+      <div class="extra-left">
+        <span class="extra-icon">💬</span>
+        <div>
+          <div class="extra-name">WhatsApp Business</div>
+          <div class="extra-desc">Настройка профиля и автоответов</div>
+        </div>
+      </div>
+      <div class="extra-price">от 5 000 ₸</div>
+    </div>
+    <div class="extra-card">
+      <div class="extra-left">
+        <span class="extra-icon">✨</span>
+        <div>
+          <div class="extra-name">Фирменный стиль</div>
+          <div class="extra-desc">Логотип, цвета, шрифты, шаблоны</div>
+        </div>
+      </div>
+      <div class="extra-price">от 15 000 ₸</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO -->
+<div class="promo-section">
+  <div class="promo-block">
+    <div class="promo-left">
+      <div class="promo-tag2">Специальное предложение</div>
+      <div class="promo-title">Скидка 30%<br>первым 3 клиентам</div>
+      <div class="promo-sub">Напишите нам прямо сейчас и получите выгодную цену</div>
+    </div>
+    <a href="https://wa.me/87083773599?text=Здравствуйте!%20Хочу%20получить%20скидку%2030%25" class="btn-white">
+      Получить скидку →
+    </a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="section-tag" style="justify-content:center">Контакты</div>
+  <h2 class="contact-title">Готовы начать?<br>Напишите нам</h2>
+  <p class="contact-sub">Бесплатная консультация — ответим на все вопросы и рассчитаем стоимость вашего сайта</p>
+  <div class="contact-buttons">
+    <a href="https://wa.me/87083773599?text=Здравствуйте!%20Хочу%20заказать%20сайт" class="btn-primary">
+      💬 Написать в WhatsApp
+    </a>
+    <a href="https://instagram.com/samal.studio" class="btn-primary" style="background:#1a1a1a;border:1px solid #2a2a2a;">
+      📸 Instagram
+    </a>
+  </div>
+  <div class="contact-info">
+    <div class="info-item">📍 <span>Астана, Казахстан</span></div>
+    <div class="info-item">⏱️ Ответ за <span>&lt; 1 часа</span></div>
+    <div class="info-item">🌐 <span>samal.studio</span></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Samal Studio</div>
+  <div class="footer-copy">© 2025 · Астана, Казахстан</div>
+  <div class="footer-links">
+    <a href="https://wa.me/87083773599" class="footer-link">WhatsApp</a>
+    <a href="https://instagram.com/samal.studio" class="footer-link">Instagram</a>
+    <a href="#services" class="footer-link">Услуги</a>
+  </div>
+</footer>
+
+</body>
+</html>
